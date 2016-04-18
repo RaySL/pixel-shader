@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            WebGLSL Shader
+        </title>
+    </head>
+    
+    <body>
+        <canvas width=400 height=400></canvas>
+    </body>
+    
+    <script id="pixel-shader" type="pixel-shader">
+        void main(){
+            gl_FragColor = vec4(gl_FragCoord.xy / 400.0, sin(time*8.0)*0.5+0.5, 0.0);
+        }
+    </script>
+    
+    <script src="pixelshader.js"></script>
+    <script src="app.js"></script>
+</html>
