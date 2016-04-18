@@ -1,6 +1,6 @@
 //◄▓▒░Swax97░▒▓►\\
 
-/*global PixelShader*/
+/*global PixelShader, PixelShaderUniform*/
 
 var shader;
 function frame(){
@@ -17,8 +17,14 @@ window.addEventListener("load", function(){
     
     shader = new PixelShader(canvas);
     shader.code = code;
+    
     shader.addUniform(PixelShader.time);
     PixelShader.timeUpdater.start();
+    
+    var res = new PixelShaderUniform("resolution", "uniform2f");
+    res.update([canvas.width, canvas.height]);
+    
+    shader.addUniform(res);
     
     shader.setup();
     frame();

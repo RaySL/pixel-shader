@@ -26,7 +26,7 @@ function PixelShaderUniform(name, type){
     this.name = name;
     this.type = type;
     
-    this.value = [0];
+    this.value;
 }
 PixelShaderUniform.prototype = {
     update: function(value){
@@ -150,12 +150,13 @@ PixelShader.prototype = {
         this.gl.enableVertexAttribArray(positionLocation);
         this.gl.vertexAttribPointer(positionLocation, 2, this.gl.FLOAT, false, 0, 0);
         
+        //fix this madness
         var pos, uni;
         for (var i = 0, l = this.uniforms.length; i < l; i++){
             uni = this.uniforms[i];
             pos = this.gl.getUniformLocation(this.program, uni.name);
             
-            if (this.gl[uni.type]){
+            if (this.gl[uni.type] && uni.value){
                 this.gl[uni.type].apply(this.gl, [pos].concat(uni.value));
             }
         }
