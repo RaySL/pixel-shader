@@ -2,20 +2,33 @@
 <html>
     <head>
         <title>
-            WebGLSL Shader
+            Shada
         </title>
     </head>
-    
+
     <body>
         <canvas width=400 height=400></canvas>
     </body>
-    
+
     <script id="pixel-shader" type="pixel-shader">
+        #ifdef GL_FRAGMENT_PRECISION_HIGH
+            precision highp float;
+        #else
+            precision mediump float;
+        #endif
+
+        uniform float time;
+        uniform vec2 resolution;
+
         void main(){
-            gl_FragColor = vec4(gl_FragCoord.xy / resolution, sin(time*8.0)*0.5+0.5, 0.0);
+            gl_FragColor = vec4(gl_FragCoord.xy / resolution, sin(time*5.0)*0.5+0.5, 0.0);
         }
     </script>
-    
-    <script src="pixelshader.js"></script>
+
+    <script src="context.js"></script>
+    <script src="program.js"></script>
+    <script src="shader.js"></script>
+    <script src="buffer.js"></script>
+    <script src="toy.js"></script>
     <script src="app.js"></script>
 </html>
