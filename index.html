@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <canvas width=400 height=400></canvas>
+        <canvas width="400" height="400"></canvas>
     </body>
 
     <script id="pixel-shader" type="pixel-shader">
@@ -19,9 +19,37 @@
 
         uniform float time;
         uniform vec2 resolution;
+        uniform sampler2D bufferA;
 
         void main(){
-            gl_FragColor = vec4(gl_FragCoord.xy / resolution, sin(time*5.0)*0.5+0.5, 0.0);
+          vec2 uv = gl_FragCoord.xy / resolution;
+          vec2 ss = 0.5 - uv;
+
+          if (length(ss + vec2(-0.2, 0.0)) < 0.1) {
+            gl_FragColor = vec4(1.0, 0.0, sin(time)*0.5+0.5, 1.0);
+          } else if (length(ss + vec2(0.2, 0.0)) < 0.1) {
+            gl_FragColor = vec4(0.0, 1.0, cos(time)*0.5+0.5, 1.0);
+          } else {
+            gl_FragColor = 0.8 * texture2D(bufferA, uv)
+                        +  0.2 * texture2D(bufferA, uv + 5.0 * vec2(sin(time), cos(time)) / resolution);
+          }
+        }
+    </script>
+
+    <script id="pixel-shader2" type="pixel-shader">
+        #ifdef GL_FRAGMENT_PRECISION_HIGH
+            precision highp float;
+        #else
+            precision mediump float;
+        #endif
+
+        uniform float time;
+        uniform vec2 resolution;
+        uniform sampler2D bufferA;
+
+        void main(){
+          vec2 uv = gl_FragCoord.xy / resolution;
+          gl_FragColor = texture2D(bufferA, uv);
         }
     </script>
 
@@ -29,6 +57,8 @@
     <script src="program.js"></script>
     <script src="shader.js"></script>
     <script src="buffer.js"></script>
-    <script src="toy.js"></script>
-    <script src="app.js"></script>
+    <script src="framebuffer.js"></script>
+    <script src="texture.js"></script>
+    <!--<script src="toy.js"></script>-->
+    <script src="app2.js"></script>
 </html>
