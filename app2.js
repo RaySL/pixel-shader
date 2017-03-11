@@ -19,6 +19,7 @@ window.addEventListener("load", function(){
   Buffer      = Buffer(ctx);
   Texture     = Texture(ctx);
   FrameBuffer = FrameBuffer(ctx);
+  Uniform     = Uniform(ctx);
 
   var prog1 = Program.create();
   var prog2 = Program.create();
@@ -56,23 +57,25 @@ window.addEventListener("load", function(){
   var fb2 = FrameBuffer.create(ctx.FRAMEBUFFER);
   FrameBuffer.texture2D(fb2, tex2);
 
-  Program.use(prog1);
 
-  ctx.uniform2f(ctx.getUniformLocation(prog1, "resolution"), ctx.drawingBufferWidth, ctx.drawingBufferHeight);
+  var res1 = Uniform.create(prog1, "resolution", "vec2");
+  Uniform.set(res1, [ctx.drawingBufferWidth, ctx.drawingBufferHeight]);
 
   //Enable vertex shader position attributes
   var positionLocation = ctx.getAttribLocation(prog1, 'a_position');
   ctx.enableVertexAttribArray(positionLocation);
   ctx.vertexAttribPointer(positionLocation, 2, ctx.FLOAT, false, 0, 0);
 
-  Program.use(prog2);
+
+  var res2 = Uniform.create(prog2, "resolution", "vec2");
+  Uniform.set(res2, [ctx.drawingBufferWidth, ctx.drawingBufferHeight]);
 
   //Enable vertex shader position attributes
   var positionLocation = ctx.getAttribLocation(prog2, 'a_position');
   ctx.enableVertexAttribArray(positionLocation);
   ctx.vertexAttribPointer(positionLocation, 2, ctx.FLOAT, false, 0, 0);
 
-  ctx.uniform2f(ctx.getUniformLocation(prog2, "resolution"), ctx.drawingBufferWidth, ctx.drawingBufferHeight);
+
 
   var buffer = false;
 
