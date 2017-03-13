@@ -14,12 +14,12 @@ window.addEventListener("load", function(){
   if (!canvas) return;
 
   var ctx = Context.create(canvas);
-  Program     = Program(ctx);
-  Shader      = Shader(ctx);
-  Buffer      = Buffer(ctx);
-  Texture     = Texture(ctx);
-  FrameBuffer = FrameBuffer(ctx);
-  Uniform     = Uniform(ctx);
+  Program(ctx);
+  Shader(ctx);
+  Buffer(ctx);
+  Texture(ctx);
+  FrameBuffer(ctx);
+  Uniform(ctx);
 
   var prog1 = Program.create();
   var prog2 = Program.create();
@@ -95,9 +95,9 @@ window.addEventListener("load", function(){
     ctx.uniform1f(ctx.getUniformLocation(prog1, "time"), time);
     ctx.drawArrays(ctx.TRIANGLES, 0, 6);
     if (buffer){
-      FrameBuffer.unbind(fb1);
+      FrameBuffer.unbind();
     } else {
-      FrameBuffer.unbind(fb2);
+      FrameBuffer.unbind();
     }
     buffer = !buffer;
 

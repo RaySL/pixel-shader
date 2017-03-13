@@ -21,8 +21,11 @@ var FrameBuffer = function(ctx){
     ctx.deleteFramebuffer(framebuffer);
   };
 
-  FrameBuffer.unbind = function(framebuffer){
-    ctx.bindFramebuffer(framebuffer.target, null);
+  FrameBuffer.unbind = function(target){
+    if (typeof target == "undefined"){
+      target = ctx.FRAMEBUFFER;
+    }
+    ctx.bindFramebuffer(target, null);
   };
 
   return FrameBuffer;
